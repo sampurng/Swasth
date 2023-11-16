@@ -95,3 +95,61 @@ CREATE TABLE body_composition (
 -- ADDING  CONSTRATINTS TO BODY_COMPOSITION--------
 ALTER TABLE body_composition ADD CONSTRAINT body_composition_pk PRIMARY KEY ( body_composition_id );
 
+-------Foreign Key Constraint--------
+ALTER TABLE body_composition
+    ADD CONSTRAINT bodyComm_UD_fk FOREIGN KEY ( user_details_user_id )
+        REFERENCES user_details ( user_id )
+            ON DELETE CASCADE;
+
+
+-- CREATING  EXERCISE_DEATILS AND SEQUENCE
+CREATE SEQUENCE SEQ_EXERCISEDETAILS_ID ---CODE IS 30-----
+START WITH 2023300001
+INCREMENT BY 1
+CACHE 10;
+
+-----CREATING EXERCISE_DETAILS TABLE---------
+
+CREATE TABLE exericse_details (
+    exercise_id          NUMBER NOT NULL,
+    type                 VARCHAR2(10 CHAR) NOT NULL,
+    from_exercise_time   DATE NOT NULL,
+    to_exercise_time     DATE NOT NULL,
+    user_details_user_id NUMBER NOT NULL
+);
+
+------ ADDING  CONSTRATINTS TO EXERCISE_DETAILS --------
+ALTER TABLE exericse_details ADD CONSTRAINT exericse_details_pk PRIMARY KEY ( exercise_id );
+
+------Foreign Key Constraint--------
+ALTER TABLE exericse_details
+    ADD CONSTRAINT exericse_details_user_details_fk FOREIGN KEY ( user_details_user_id )
+        REFERENCES user_details ( user_id )
+            ON DELETE CASCADE;
+            
+            
+-- CREATING  EXERCISE_METRICS AND SEQUENCE
+CREATE SEQUENCE SEQ_EXERCISEMETRICS_ID ---CODE IS 35-----
+START WITH 2023350001
+INCREMENT BY 1
+CACHE 10;
+
+-----CREATING EXERCISE_METRICS TABLE---------
+
+CREATE TABLE exercise_metrics (
+    interval                     NUMBER NOT NULL,
+    calories                     NUMBER NOT NULL,
+    steps                        NUMBER,
+    "Active Time"                NUMBER,
+    exericse_details_exercise_id NUMBER NOT NULL
+);
+
+------ ADDING  CONSTRATINTS TO EXERCISE_METRICS --------
+
+ALTER TABLE exercise_metrics ADD CONSTRAINT exercise_metrics_pk PRIMARY KEY ( exericse_details_exercise_id,interval );
+
+------Foreign Key Constraint--------
+ALTER TABLE exercise_metrics
+    ADD CONSTRAINT exercise_metrics_exericse_details_fk FOREIGN KEY ( exericse_details_exercise_id )
+        REFERENCES exericse_details ( exercise_id )
+            ON DELETE CASCADE;
