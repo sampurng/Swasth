@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="DMDD Project" id="F1180249-F7BE-9ABB-F5FF-D868021F31AE" version="3.5">
+<createdBy>sampurna</createdBy>
+<createdTime>2023-10-13 19:34:52 UTC</createdTime>
+<ownerDesignName>DMDD Project</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>F1180249-F7BE-9ABB-F5FF-D868021F31AE</designId>
+</OSDM_Design>
