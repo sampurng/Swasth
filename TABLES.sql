@@ -94,4 +94,3 @@ CREATE TABLE body_composition (
 
 -- ADDING  CONSTRATINTS TO BODY_COMPOSITION--------
 ALTER TABLE body_composition ADD CONSTRAINT body_composition_pk PRIMARY KEY ( body_composition_id );
-
