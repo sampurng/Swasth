@@ -4,7 +4,7 @@
 -- CREATE TABLE CIasda(ID_a NUMBER PRIMARY KEY, CONSTRAINT ABC FOREIGN KEY (ID_a) REFERENCES NEwTab(ID), NAME VARCHAR(20));
 
 
--- SELECT * FROM USER_CONSTRAINTS;
+ -- SELECT * FROM USER_CONSTRAINTS;
 -- SELECT * FROM USEr_TABLES;
 -- SELECT * FRoM USER_SEQUENCES;
  
@@ -94,7 +94,6 @@ CREATE TABLE body_composition (
 
 -- ADDING  CONSTRATINTS TO BODY_COMPOSITION--------
 ALTER TABLE body_composition ADD CONSTRAINT body_composition_pk PRIMARY KEY ( body_composition_id );
-<<<<<<< HEAD
 
 -------Foreign Key Constraint--------
 ALTER TABLE body_composition
@@ -154,5 +153,3 @@ ALTER TABLE exercise_metrics
     ADD CONSTRAINT exercise_metrics_exericse_details_fk FOREIGN KEY ( exericse_details_exercise_id )
         REFERENCES exericse_details ( exercise_id )
             ON DELETE CASCADE;
-=======
->>>>>>> 8776cf0a717cbde8829bf7b5010ea80519f02771
