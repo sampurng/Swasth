@@ -51,7 +51,7 @@ END;
 /
 
 -- CREATING FIRST TABLE AND SEQUENCE
-CREATE SEQUENCE SEQ_USER_ID
+CREATE SEQUENCE SEQ_USER_ID ----CODE IS 10------
 START WITH 2023100001
 INCREMENT BY 1
 CACHE 10;
@@ -72,3 +72,25 @@ CREATE TABLE user_details (
 
 -- ADDING  CONSTRATINTS TO USER_DETAILS
 ALTER TABLE user_details ADD CONSTRAINT user_details_pk PRIMARY KEY ( user_id );
+
+
+-- CREATING Body Composition AND SEQUENCE
+CREATE SEQUENCE SEQ_BODYCOMM_ID ---CODE IS 20-----
+START WITH 2023200001
+INCREMENT BY 1
+CACHE 10;
+
+-----CREATING BODY_COMPOSITION TABLE---------
+CREATE TABLE body_composition (
+    body_composition_id  NUMBER NOT NULL,
+    height               NUMBER NOT NULL,
+    weight               NUMBER NOT NULL,
+    skeletal_muscle_mass NUMBER,
+    fat_mass             NUMBER,
+    body_fat             NUMBER,
+    body_water           NUMBER,
+    user_details_user_id NUMBER NOT NULL
+);
+
+-- ADDING  CONSTRATINTS TO BODY_COMPOSITION--------
+ALTER TABLE body_composition ADD CONSTRAINT body_composition_pk PRIMARY KEY ( body_composition_id );
