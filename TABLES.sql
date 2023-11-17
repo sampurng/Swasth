@@ -153,3 +153,80 @@ ALTER TABLE exercise_metrics
     ADD CONSTRAINT exercise_metrics_exericse_details_fk FOREIGN KEY ( exericse_details_exercise_id )
         REFERENCES exericse_details ( exercise_id )
             ON DELETE CASCADE;
+            
+-- CREATING  SLEEP_DETAILS AND SEQUENCE   
+CREATE SEQUENCE SEQ_SLEEPDETAILS_ID ---CODE IS 40-----
+START WITH 2023400001
+INCREMENT BY 1
+CACHE 10;
+
+-----CREATING SLEEP_DETAILS TABLE---------
+CREATE TABLE sleep_details (
+    sleep_id             NUMBER NOT NULL,
+    from_sleep_time      DATE NOT NULL,
+    to_sleep_time        DATE NOT NULL,
+    user_details_user_id NUMBER NOT NULL
+);
+
+------ ADDING  CONSTRATINTS TO SLEEP_DETAILS --------
+ALTER TABLE sleep_details ADD CONSTRAINT sleep_pk PRIMARY KEY ( sleep_id );
+
+------Foreign Key Constraint--------
+ALTER TABLE sleep_details
+    ADD CONSTRAINT sleep_details_user_details_fk FOREIGN KEY ( user_details_user_id )
+        REFERENCES user_details ( user_id )
+            ON DELETE CASCADE;
+
+-- CREATING  SLEEP_METRICS AND SEQUENCE   
+CREATE SEQUENCE SEQ_SLEEPMETRICS_ID ---CODE IS 45-----
+START WITH 2023450001
+INCREMENT BY 1
+CACHE 10;
+
+-----CREATING SLEEP_METRICS TABLE---------
+CREATE TABLE sleep_metrics (
+    sleep_cycle            NUMBER NOT NULL,
+    deep_sleep             NUMBER,
+    awake                  NUMBER,
+    rem                    NUMBER,
+    light                  NUMBER,
+    sleep_details_sleep_id NUMBER NOT NULL
+);
+
+------ ADDING  CONSTRATINTS TO SLEEP_METRICS --------
+ALTER TABLE sleep_metrics ADD CONSTRAINT sleep_metrics_pk PRIMARY KEY ( sleep_details_sleep_id,
+                                                                        sleep_cycle );
+                                                                        
+------Foreign Key Constraint--------
+ALTER TABLE sleep_metrics
+    ADD CONSTRAINT sleep_metrics_sleep_details_fk FOREIGN KEY ( sleep_details_sleep_id )
+        REFERENCES sleep_details ( sleep_id )
+            ON DELETE CASCADE;
+            
+-- CREATING  HEALTH_DETAILS AND SEQUENCE   
+CREATE SEQUENCE SEQ_HEALTHDETAILS_ID ---CODE IS 50-----
+START WITH 2023500001
+INCREMENT BY 1
+CACHE 10;
+
+-----CREATING HEALTH_DETAILS TABLE---------
+CREATE TABLE health_details (
+    time_of_activity             DATE NOT NULL,
+    blood_oxygen                 NUMBER,
+    heart_rate                   NUMBER NOT NULL,
+    ecg                          VARCHAR2(10 CHAR),
+    bp_systolic                  NUMBER,
+    bp_diastolic                 NUMBER,
+    user_details_user_id         NUMBER NOT NULL,
+    exericse_details_exercise_id NUMBER NOT NULL,
+    sleep_details_sleep_id       NUMBER NOT NULL
+);
+
+------ ADDING  CONSTRATINTS TO HEALTH_DETAILS --------
+ALTER TABLE health_details ADD CONSTRAINT health_details_pk PRIMARY KEY ( time_of_activity );
+
+------Foreign Key Constraint--------
+ALTER TABLE health_details
+ ADD CONSTRAINT health_details_user_details_fk FOREIGN KEY ( user_details_user_id )
+        REFERENCES user_details ( user_id )
+            ON DELETE CASCADE;
