@@ -230,6 +230,7 @@ ALTER TABLE health_details
  ADD CONSTRAINT health_details_user_details_fk FOREIGN KEY ( user_details_user_id )
         REFERENCES user_details ( user_id )
             ON DELETE CASCADE;
+
             
 --Adding Data to the tables
 --USER_DETAILS
@@ -388,4 +389,5 @@ INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_
 VALUES(TO_DATE('2023-11-09 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 99, 75, 'Normal', 134, 94, 9, 9, 9);
 INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
 VALUES(TO_DATE('2023-11-10 12:30:00', 'YYYY-MM-DD HH24:MI:SS'), 90, 80, 'Normal', 136, 96, 10, 10, 10);
+
 
