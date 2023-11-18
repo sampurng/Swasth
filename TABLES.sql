@@ -68,8 +68,7 @@ CREATE TABLE user_details (
     country           VARCHAR2(200 CHAR) NOT NULL,
     states            VARCHAR2(200 CHAR) NOT NULL,
     zipcode           NUMBER NOT NULL, 
-    age               NUMBER NOT NULL,
-    sex               VARCHAR2(200 CHAR) NOT NULL
+    age               NUMBER NOT NULL
     
 );
 
@@ -245,9 +244,9 @@ ALTER TABLE health_details
 --USER_DETAILS
 
 
-INSERT INTO user_details (user_id, first_name, last_name, email, street_address, city, country, states, zipcode, age,sex)
-VALUES (SEQ_USER_ID.NEXTVAL , 'John', 'Doe', 'john.doe@example.com', '123 Main St', 'BOSTON', 'UNITED STATES', 'MASSECHUSETS', 12345, 30,'Male');
-=======
+INSERT INTO user_details (user_id, first_name, last_name, email, street_address, city, country, states, zipcode, age)
+VALUES (SEQ_USER_ID.NEXTVAL , 'John', 'Doe', 'john.doe@example.com', '123 Main St', 'BOSTON', 'UNITED STATES', 'MASSECHUSETS', 12345, 30);
+
 INSERT INTO user_details (user_id, first_name, last_name, email, street_address, city, country, states, zipcode, age)
 VALUES (SEQ_USER_ID.NEXTVAL , 'John', 'Doe', 'john.doe@example.com', '123 Main St', 'BOSTON', 'UNITED STATES', 'MASSECHUSETS', 12345, 30);
 
