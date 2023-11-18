@@ -51,10 +51,11 @@ END;
 /
 
 -- CREATING FIRST TABLE AND SEQUENCE
-CREATE SEQUENCE SEQ_USER_ID ----CODE IS 10------
-START WITH 2023100001
-INCREMENT BY 1
-CACHE 10;
+CREATE SEQUENCE SEQ_USER_ID
+  START WITH 2023100001
+  INCREMENT BY 1
+  NOCACHE
+  NOCYCLE;
 
 -- CREATING USER_DETAILS TABLE
 CREATE TABLE user_details (
@@ -74,11 +75,12 @@ CREATE TABLE user_details (
 ALTER TABLE user_details ADD CONSTRAINT user_details_pk PRIMARY KEY ( user_id );
 
 
--- CREATING Body Composition AND SEQUENCE
-CREATE SEQUENCE SEQ_BODYCOMM_ID ---CODE IS 20-----
-START WITH 2023200001
-INCREMENT BY 1
-CACHE 10;
+-- CREATING Body Composition AND SEQUENCE -- 20
+CREATE SEQUENCE SEQ_BODYCOMM_ID 
+    START WITH 2023200001
+    INCREMENT BY 1
+    NOCYCLE
+    NOCACHE;
 
 -----CREATING BODY_COMPOSITION TABLE---------
 CREATE TABLE body_composition (
@@ -102,11 +104,12 @@ ALTER TABLE body_composition
             ON DELETE CASCADE;
 
 
--- CREATING  EXERCISE_DEATILS AND SEQUENCE
-CREATE SEQUENCE SEQ_EXERCISEDETAILS_ID ---CODE IS 30-----
-START WITH 2023300001
-INCREMENT BY 1
-CACHE 10;
+-- CREATING  EXERCISE_DEATILS AND SEQUENCE ---CODE IS 30-----
+CREATE SEQUENCE SEQ_EXERCISEDETAILS_ID 
+    START WITH 2023300001
+    INCREMENT BY 1
+    NOCYCLE
+    NOCACHE;
 
 -----CREATING EXERCISE_DETAILS TABLE---------
 
@@ -128,11 +131,12 @@ ALTER TABLE exericse_details
             ON DELETE CASCADE;
             
             
--- CREATING  EXERCISE_METRICS AND SEQUENCE
-CREATE SEQUENCE SEQ_EXERCISEMETRICS_ID ---CODE IS 35-----
-START WITH 2023350001
-INCREMENT BY 1
-CACHE 10;
+-- CREATING  EXERCISE_METRICS AND SEQUENCE ---CODE IS 35-----
+CREATE SEQUENCE SEQ_EXERCISEMETRICS_ID 
+    START WITH 2023350001
+    INCREMENT BY 1
+    NOCYCLE
+    NOCACHE;
 
 -----CREATING EXERCISE_METRICS TABLE---------
 
@@ -154,11 +158,12 @@ ALTER TABLE exercise_metrics
         REFERENCES exericse_details ( exercise_id )
             ON DELETE CASCADE;
             
--- CREATING  SLEEP_DETAILS AND SEQUENCE   
-CREATE SEQUENCE SEQ_SLEEPDETAILS_ID ---CODE IS 40-----
-START WITH 2023400001
-INCREMENT BY 1
-CACHE 10;
+-- CREATING  SLEEP_DETAILS AND SEQUENCE   ---CODE IS 40-----
+CREATE SEQUENCE SEQ_SLEEPDETAILS_ID 
+    START WITH 2023400001
+    INCREMENT BY 1
+    NOCYCLE
+    NOCACHE;
 
 -----CREATING SLEEP_DETAILS TABLE---------
 CREATE TABLE sleep_details (
@@ -177,11 +182,12 @@ ALTER TABLE sleep_details
         REFERENCES user_details ( user_id )
             ON DELETE CASCADE;
 
--- CREATING  SLEEP_METRICS AND SEQUENCE   
-CREATE SEQUENCE SEQ_SLEEPMETRICS_ID ---CODE IS 45-----
-START WITH 2023450001
-INCREMENT BY 1
-CACHE 10;
+-- CREATING  SLEEP_METRICS AND SEQUENCE   ---CODE IS 45-----
+CREATE SEQUENCE SEQ_SLEEPMETRICS_ID 
+    START WITH 2023450001
+    INCREMENT BY 1
+    NOCYCLE
+    NOCACHE;
 
 -----CREATING SLEEP_METRICS TABLE---------
 CREATE TABLE sleep_metrics (
@@ -203,11 +209,12 @@ ALTER TABLE sleep_metrics
         REFERENCES sleep_details ( sleep_id )
             ON DELETE CASCADE;
             
--- CREATING  HEALTH_DETAILS AND SEQUENCE   
-CREATE SEQUENCE SEQ_HEALTHDETAILS_ID ---CODE IS 50-----
-START WITH 2023500001
-INCREMENT BY 1
-CACHE 10;
+-- CREATING  HEALTH_DETAILS AND SEQUENCE   ---CODE IS 50-----
+CREATE SEQUENCE SEQ_HEALTHDETAILS_ID 
+    START WITH 2023500001
+    INCREMENT BY 1
+    NOCYCLE
+    NOCACHE;
 
 -----CREATING HEALTH_DETAILS TABLE---------
 CREATE TABLE health_details (
@@ -218,8 +225,8 @@ CREATE TABLE health_details (
     bp_systolic                  NUMBER,
     bp_diastolic                 NUMBER,
     user_details_user_id         NUMBER NOT NULL,
-    exericse_details_exercise_id NUMBER NOT NULL,
-    sleep_details_sleep_id       NUMBER NOT NULL
+    exericse_details_exercise_id NUMBER,
+    sleep_details_sleep_id       NUMBER
 );
 
 ------ ADDING  CONSTRATINTS TO HEALTH_DETAILS --------
@@ -236,158 +243,137 @@ ALTER TABLE health_details
 --USER_DETAILS
 
 INSERT INTO user_details (user_id, first_name, last_name, email, street_address, city, country, states, zipcode, age)
-VALUES (1, 'John', 'Doe', 'john.doe@example.com', '123 Main St', 'BOSTON', 'UNITED STATES', 'MASSECHUSETS', 12345, 30);
-INSERT INTO user_details (user_id, first_name, last_name, email, street_address, city, country, states, zipcode, age)
-VALUES(2, 'Alice', 'Smith', 'alice.smith@example.com', '456 Elm St', 'New York City', 'USA', 'New York', 23456, 25);
-INSERT INTO user_details (user_id, first_name, last_name, email, street_address, city, country, states, zipcode, age)
-VALUES(3, 'Michael', 'Johnson', 'michael.johnson@example.com', '789 Oak St', 'Toronto', 'Canada', 'Ontario', 34567, 35);
-INSERT INTO user_details (user_id, first_name, last_name, email, street_address, city, country, states, zipcode, age)
-VALUES(4, 'Emily', 'Brown', 'emily.brown@example.com', '101 Pine St', 'Sydney', 'Australia', 'New South Wales', 45678, 28);
-INSERT INTO user_details (user_id, first_name, last_name, email, street_address, city, country, states, zipcode, age)
-VALUES(5, 'Daniel', 'Williams', 'daniel.williams@example.com', '246 Maple St', 'Paris', 'France', 'Île-de-France', 56789, 32);
-INSERT INTO user_details (user_id, first_name, last_name, email, street_address, city, country, states, zipcode, age)
-VALUES(6, 'Olivia', 'Garcia', 'olivia.garcia@example.com', '369 Cedar St', 'Berlin', 'Germany', 'Berlin', 67890, 27);
-INSERT INTO user_details (user_id, first_name, last_name, email, street_address, city, country, states, zipcode, age)
-VALUES(7, 'William', 'Martinez', 'william.martinez@example.com', '505 Walnut St', 'Tokyo', 'Japan', 'Tokyo', 78901, 33);
-INSERT INTO user_details (user_id, first_name, last_name, email, street_address, city, country, states, zipcode, age)
-VALUES(8, 'Sophia', 'Robinson', 'sophia.robinson@example.com', '808 Birch St', 'Sao Paulo', 'Brazil', 'São Paulo', 89012, 29);
-INSERT INTO user_details (user_id, first_name, last_name, email, street_address, city, country, states, zipcode, age)
-VALUES(9, 'James', 'Lee', 'james.lee@example.com', '999 Oak St', 'Mumbai', 'India', 'Maharashtra', 90123, 31);
-INSERT INTO user_details (user_id, first_name, last_name, email, street_address, city, country, states, zipcode, age)
-VALUES(10, 'Emma', 'Lopez', 'emma.lopez@example.com', '777 Pine St', 'Cape Town', 'South Africa', 'Western Cape', 12345, 26);
+VALUES (SEQ_USER_ID.NEXTVAL , 'John', 'Doe', 'john.doe@example.com', '123 Main St', 'BOSTON', 'UNITED STATES', 'MASSECHUSETS', 12345, 30);
 
---body composition table
 INSERT INTO body_composition (body_composition_id, height, weight, skeletal_muscle_mass, fat_mass, body_fat, body_water, user_details_user_id)
-VALUES (1, 170, 70, 60, 15, 20, 45, 1);
-INSERT INTO body_composition (body_composition_id, height, weight, skeletal_muscle_mass, fat_mass, body_fat, body_water, user_details_user_id)
-VALUES (2, 165, 65, 55, 18, 25, 42, 2);
-INSERT INTO body_composition (body_composition_id, height, weight, skeletal_muscle_mass, fat_mass, body_fat, body_water, user_details_user_id)
-VALUES (3, 180, 80, 65, 20, 22, 47, 3);
-INSERT INTO body_composition (body_composition_id, height, weight, skeletal_muscle_mass, fat_mass, body_fat, body_water, user_details_user_id)
-VALUES (4, 160, 55, 50, 12, 18, 50, 4);
-INSERT INTO body_composition (body_composition_id, height, weight, skeletal_muscle_mass, fat_mass, body_fat, body_water, user_details_user_id)
-VALUES (5, 175, 75, 62, 17, 23, 44, 5);
-INSERT INTO body_composition (body_composition_id, height, weight, skeletal_muscle_mass, fat_mass, body_fat, body_water, user_details_user_id)
-VALUES (6, 172, 68, 58, 16, 21, 46, 6);
-INSERT INTO body_composition (body_composition_id, height, weight, skeletal_muscle_mass, fat_mass, body_fat, body_water, user_details_user_id)
-VALUES (7, 168, 72, 63, 19, 24, 43, 7);
-INSERT INTO body_composition (body_composition_id, height, weight, skeletal_muscle_mass, fat_mass, body_fat, body_water, user_details_user_id)
-VALUES (8, 185, 85, 70, 22, 28, 48, 8);
-INSERT INTO body_composition (body_composition_id, height, weight, skeletal_muscle_mass, fat_mass, body_fat, body_water, user_details_user_id)
-VALUES (9, 155, 50, 48, 11, 15, 52, 9);
-INSERT INTO body_composition (body_composition_id, height, weight, skeletal_muscle_mass, fat_mass, body_fat, body_water, user_details_user_id)
-VALUES (10, 178, 77, 66, 18, 26, 41, 10);
-
---Excercise Details Table
+VALUES (SEQ_BODYCOMM_ID.NEXTVAL, 170, 70, 60, 15, 20, 45, SEQ_USER_ID.CURRVAL);
 
 INSERT INTO exericse_details (exercise_id, type, from_exercise_time, to_exercise_time, user_details_user_id)
-VALUES (1, 'running', TO_DATE('2023-10-01 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-10-01 08:30:00', 'YYYY-MM-DD HH24:MI:SS'), 1);
-INSERT INTO exericse_details (exercise_id, type, from_exercise_time, to_exercise_time, user_details_user_id)
-VALUES(2, 'walking', TO_DATE('2023-10-01 09:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-10-01 09:30:00', 'YYYY-MM-DD HH24:MI:SS'), 2);
-INSERT INTO exericse_details (exercise_id, type, from_exercise_time, to_exercise_time, user_details_user_id)
-VALUES(3, 'cycling', TO_DATE('2023-10-01 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-10-01 10:30:00', 'YYYY-MM-DD HH24:MI:SS'), 3);
-INSERT INTO exericse_details (exercise_id, type, from_exercise_time, to_exercise_time, user_details_user_id)
-VALUES(4, 'swimming', TO_DATE('2023-10-01 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-10-01 11:30:00', 'YYYY-MM-DD HH24:MI:SS'), 4);
-INSERT INTO exericse_details (exercise_id, type, from_exercise_time, to_exercise_time, user_details_user_id)
-VALUES(5, 'running', TO_DATE('2023-10-01 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-10-01 12:30:00', 'YYYY-MM-DD HH24:MI:SS'), 5);
-INSERT INTO exericse_details (exercise_id, type, from_exercise_time, to_exercise_time, user_details_user_id)
-VALUES(6, 'walking', TO_DATE('2023-10-01 13:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-10-01 13:30:00', 'YYYY-MM-DD HH24:MI:SS'), 6);
-INSERT INTO exericse_details (exercise_id, type, from_exercise_time, to_exercise_time, user_details_user_id)
-VALUES(7, 'cycling', TO_DATE('2023-10-01 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-10-01 14:30:00', 'YYYY-MM-DD HH24:MI:SS'), 7);
-INSERT INTO exericse_details (exercise_id, type, from_exercise_time, to_exercise_time, user_details_user_id)
-VALUES(8, 'swimming', TO_DATE('2023-10-01 15:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-10-01 15:30:00', 'YYYY-MM-DD HH24:MI:SS'), 8);
-INSERT INTO exericse_details (exercise_id, type, from_exercise_time, to_exercise_time, user_details_user_id)
-VALUES(9, 'running', TO_DATE('2023-10-01 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-10-01 16:30:00', 'YYYY-MM-DD HH24:MI:SS'), 9);
-INSERT INTO exericse_details (exercise_id, type, from_exercise_time, to_exercise_time, user_details_user_id)
-VALUES(10, 'walking', TO_DATE('2023-10-01 17:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-10-01 17:30:00', 'YYYY-MM-DD HH24:MI:SS'), 10);
- 
---Exercise Metrics Table
-INSERT INTO exercise_metrics (interval, calories, steps, "Active Time", exericse_details_exercise_id)
-VALUES (1, 100, 1000, 20, 1);
-INSERT INTO exercise_metrics (interval, calories, steps, "Active Time", exericse_details_exercise_id)
-VALUES (2, 80, 800, 15, 2);
-INSERT INTO exercise_metrics (interval, calories, steps, "Active Time", exericse_details_exercise_id)
-VALUES (3, 120, 1200, 25, 3);
-INSERT INTO exercise_metrics (interval, calories, steps, "Active Time", exericse_details_exercise_id)
-VALUES (4, 90, 900, 18, 4);
-INSERT INTO exercise_metrics (interval, calories, steps, "Active Time", exericse_details_exercise_id)
-VALUES (5, 110, 1100, 22, 5);
-INSERT INTO exercise_metrics (interval, calories, steps, "Active Time", exericse_details_exercise_id)
-VALUES (6, 85, 850, 16, 6);
-INSERT INTO exercise_metrics (interval, calories, steps, "Active Time", exericse_details_exercise_id)
-VALUES (7, 125, 1250, 26, 7);
-INSERT INTO exercise_metrics (interval, calories, steps, "Active Time", exericse_details_exercise_id)
-VALUES (8, 95, 950, 19, 8);
-INSERT INTO exercise_metrics (interval, calories, steps, "Active Time", exericse_details_exercise_id)
-VALUES (9, 115, 1150, 23, 9);
-INSERT INTO exercise_metrics (interval, calories, steps, "Active Time", exericse_details_exercise_id)
-VALUES (10, 88, 880, 17, 10);
+VALUES (SEQ_EXERCISEDETAILS_ID.NEXTVAL, 'running', TO_DATE('2023-10-01 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-10-01 08:30:00', 'YYYY-MM-DD HH24:MI:SS'), SEQ_USER_ID.CURRVAL);
 
---SLEEP DETAILS TABLE
-INSERT INTO sleep_details (sleep_id, from_sleep_time, to_sleep_time, user_details_user_id)
-VALUES (1, TO_DATE('2023-11-01 22:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-11-01 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1);
-INSERT INTO sleep_details (sleep_id, from_sleep_time, to_sleep_time, user_details_user_id)
-VALUES(2, TO_DATE('2023-11-02 23:30:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-11-03 00:30:00', 'YYYY-MM-DD HH24:MI:SS'), 2);
-INSERT INTO sleep_details (sleep_id, from_sleep_time, to_sleep_time, user_details_user_id)
-VALUES(3, TO_DATE('2023-11-03 22:45:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-11-03 23:45:00', 'YYYY-MM-DD HH24:MI:SS'), 3);
-INSERT INTO sleep_details (sleep_id, from_sleep_time, to_sleep_time, user_details_user_id)
-VALUES(4, TO_DATE('2023-11-04 23:15:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-11-05 00:15:00', 'YYYY-MM-DD HH24:MI:SS'), 4);
-INSERT INTO sleep_details (sleep_id, from_sleep_time, to_sleep_time, user_details_user_id)
-VALUES(5, TO_DATE('2023-11-05 22:30:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-11-05 23:30:00', 'YYYY-MM-DD HH24:MI:SS'), 5);
-INSERT INTO sleep_details (sleep_id, from_sleep_time, to_sleep_time, user_details_user_id)
-VALUES(6, TO_DATE('2023-11-06 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-11-07 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), 6);
-INSERT INTO sleep_details (sleep_id, from_sleep_time, to_sleep_time, user_details_user_id)
-VALUES(7, TO_DATE('2023-11-07 22:15:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-11-07 23:15:00', 'YYYY-MM-DD HH24:MI:SS'), 7);
-INSERT INTO sleep_details (sleep_id, from_sleep_time, to_sleep_time, user_details_user_id)
-VALUES(8, TO_DATE('2023-11-08 23:30:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-11-09 00:30:00', 'YYYY-MM-DD HH24:MI:SS'), 8);
-INSERT INTO sleep_details (sleep_id, from_sleep_time, to_sleep_time, user_details_user_id)
-VALUES(9, TO_DATE('2023-11-09 22:45:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-11-09 23:45:00', 'YYYY-MM-DD HH24:MI:SS'), 9);
-INSERT INTO sleep_details (sleep_id, from_sleep_time, to_sleep_time, user_details_user_id)
-VALUES(10, TO_DATE('2023-11-10 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-11-11 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), 10);
+INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
+VALUES(TO_DATE('2023-10-01 08:05:00', 'YYYY-MM-DD HH24:MI:SS'), 98, 120, 'Normal', 130, 90, SEQ_USER_ID.CURRVAL, SEQ_EXERCISEDETAILS_ID.CURRVAL, null);
+INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
+VALUES(TO_DATE('2023-10-01 08:10:00', 'YYYY-MM-DD HH24:MI:SS'), 91, 165, 'Normal', 132, 92, SEQ_USER_ID.CURRVAL, SEQ_EXERCISEDETAILS_ID.CURRVAL, null);
+INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
+VALUES(TO_DATE('2023-10-01 08:15:00', 'YYYY-MM-DD HH24:MI:SS'), 99, 180, 'Normal', 134, 94, SEQ_USER_ID.CURRVAL, SEQ_EXERCISEDETAILS_ID.CURRVAL, null);
+INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
+VALUES(TO_DATE('2023-10-01 08:20:00', 'YYYY-MM-DD HH24:MI:SS'), 90, 170, 'Normal', 136, 96, SEQ_USER_ID.CURRVAL, SEQ_EXERCISEDETAILS_ID.CURRVAL, null);
+INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
+VALUES(TO_DATE('2023-10-01 08:25:00', 'YYYY-MM-DD HH24:MI:SS'), 93, 150, 'Normal', 124, 84, SEQ_USER_ID.CURRVAL, SEQ_EXERCISEDETAILS_ID.CURRVAL, null);
 
---Sleep Metrics Table
+INSERT INTO exercise_metrics (interval, calories, steps, "Active Time", exericse_details_exercise_id)
+VALUES (1, 100, 1000, 20, SEQ_EXERCISEDETAILS_ID.CURRVAL);
+
+INSERT INTO exericse_details (exercise_id, type, from_exercise_time, to_exercise_time, user_details_user_id)
+VALUES(SEQ_EXERCISEDETAILS_ID.NEXTVAL, 'walking', TO_DATE('2023-10-28 09:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-10-01 09:30:00', 'YYYY-MM-DD HH24:MI:SS'), SEQ_USER_ID.CURRVAL);
+
+--measuring health details 5 times in half hour of exercise here
+INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
+VALUES (TO_DATE('2023-10-28 09:05:00', 'YYYY-MM-DD HH24:MI:SS'), 95, 80, 'Normal', 120, 80, SEQ_USER_ID.CURRVAL, SEQ_EXERCISEDETAILS_ID.CURRVAL, null);
+INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
+VALUES(TO_DATE('2023-10-28 09:10:00', 'YYYY-MM-DD HH24:MI:SS'), 94, 92, 'Normal', 122, 82, SEQ_USER_ID.CURRVAL, SEQ_EXERCISEDETAILS_ID.CURRVAL, null);
+INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
+VALUES(TO_DATE('2023-10-28 09:15:00', 'YYYY-MM-DD HH24:MI:SS'), 96, 130, 'Normal', 118, 78, SEQ_USER_ID.CURRVAL, SEQ_EXERCISEDETAILS_ID.CURRVAL, null);
+INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
+VALUES(TO_DATE('2023-10-28 09:20:00', 'YYYY-MM-DD HH24:MI:SS'), 93, 150, 'Normal', 124, 84, SEQ_USER_ID.CURRVAL, SEQ_EXERCISEDETAILS_ID.CURRVAL, null);
+INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
+VALUES(TO_DATE('2023-10-28 9:25:00', 'YYYY-MM-DD HH24:MI:SS'), 97, 160, 'Normal', 126, 86, SEQ_USER_ID.CURRVAL, SEQ_EXERCISEDETAILS_ID.CURRVAL, null);
+INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
+VALUES(TO_DATE('2023-10-28 9:30:00', 'YYYY-MM-DD HH24:MI:SS'), 99, 100, 'Normal', 120, 68, SEQ_USER_ID.CURRVAL, SEQ_EXERCISEDETAILS_ID.CURRVAL, null);
+
+
+INSERT INTO exercise_metrics (interval, calories, steps, "Active Time", exericse_details_exercise_id)
+VALUES (1, 80, 800, 15,  SEQ_EXERCISEDETAILS_ID.CURRVAL);
+
+INSERT INTO exericse_details (exercise_id, type, from_exercise_time, to_exercise_time, user_details_user_id)
+VALUES(SEQ_EXERCISEDETAILS_ID.NEXTVAL, 'cycling', TO_DATE('2023-11-30 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-10-01 11:30:00', 'YYYY-MM-DD HH24:MI:SS'), SEQ_USER_ID.CURRVAL);
+
+--measuring again for exercise
+INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
+VALUES(TO_DATE('2023-11-30 10:10:00', 'YYYY-MM-DD HH24:MI:SS'), 99, 76, 'Normal', 128, 88, SEQ_USER_ID.CURRVAL, SEQ_EXERCISEDETAILS_ID.CURRVAL, null);
+INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
+VALUES(TO_DATE('2023-11-30 10:20:00', 'YYYY-MM-DD HH24:MI:SS'), 98, 120, 'Normal', 130, 90, SEQ_USER_ID.CURRVAL, SEQ_EXERCISEDETAILS_ID.CURRVAL, null);
+INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
+VALUES(TO_DATE('2023-11-30 10:30:00', 'YYYY-MM-DD HH24:MI:SS'), 91, 165, 'Normal', 132, 92, SEQ_USER_ID.CURRVAL, SEQ_EXERCISEDETAILS_ID.CURRVAL, null);
+INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
+VALUES(TO_DATE('2023-11-30 10:40:00', 'YYYY-MM-DD HH24:MI:SS'), 99, 180, 'Normal', 134, 94, SEQ_USER_ID.CURRVAL, SEQ_EXERCISEDETAILS_ID.CURRVAL, null);
+INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
+VALUES(TO_DATE('2023-11-30 10:50:00', 'YYYY-MM-DD HH24:MI:SS'), 90, 170, 'Normal', 136, 96, SEQ_USER_ID.CURRVAL, SEQ_EXERCISEDETAILS_ID.CURRVAL, null);
+INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
+VALUES(TO_DATE('2023-11-30 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), 93, 150, 'Normal', 124, 84, SEQ_USER_ID.CURRVAL, SEQ_EXERCISEDETAILS_ID.CURRVAL, null);
+INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
+VALUES(TO_DATE('2023-11-30 11:10:00', 'YYYY-MM-DD HH24:MI:SS'), 97, 160, 'Normal', 126, 86, SEQ_USER_ID.CURRVAL, SEQ_EXERCISEDETAILS_ID.CURRVAL, null);
+INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
+VALUES(TO_DATE('2023-11-30 11:20:00', 'YYYY-MM-DD HH24:MI:SS'), 91, 161, 'Normal', 132, 92, SEQ_USER_ID.CURRVAL, SEQ_EXERCISEDETAILS_ID.CURRVAL, null);
+INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
+VALUES(TO_DATE('2023-11-30 11:30:00', 'YYYY-MM-DD HH24:MI:SS'), 99, 180, 'Normal', 134, 94, SEQ_USER_ID.CURRVAL, SEQ_EXERCISEDETAILS_ID.CURRVAL, null);
+
+
+INSERT INTO exercise_metrics (interval, calories, steps, "Active Time", exericse_details_exercise_id)
+VALUES (1, 120, 1200, 25, SEQ_EXERCISEDETAILS_ID.CURRVAL);
+
+INSERT INTO exercise_metrics (interval, calories, steps, "Active Time", exericse_details_exercise_id)
+VALUES (2, 90, 900, 18, SEQ_EXERCISEDETAILS_ID.CURRVAL);
+
+INSERT INTO exercise_metrics (interval, calories, steps, "Active Time", exericse_details_exercise_id)
+VALUES (3, 110, 1100, 22, SEQ_EXERCISEDETAILS_ID.CURRVAL);
+
+INSERT INTO sleep_details (sleep_id, from_sleep_time, to_sleep_time, user_details_user_id)
+VALUES (SEQ_SLEEPDETAILS_ID.NEXTVAL, TO_DATE('2023-11-01 22:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-11-02 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), SEQ_USER_ID.CURRVAL);
 
 INSERT INTO sleep_metrics (sleep_cycle, deep_sleep, awake, rem, light, sleep_details_sleep_id)
-VALUES (1, 45, 20, 15, 80, 1);
+VALUES (1, 15, 10, 20, 15, SEQ_SLEEPDETAILS_ID.CURRVAL);
 INSERT INTO sleep_metrics (sleep_cycle, deep_sleep, awake, rem, light, sleep_details_sleep_id)
-VALUES (2, 50, 25, 10, 85, 2);
+VALUES (2, 8, 12, 18, 22, SEQ_SLEEPDETAILS_ID.CURRVAL);
 INSERT INTO sleep_metrics (sleep_cycle, deep_sleep, awake, rem, light, sleep_details_sleep_id)
-VALUES (3, 40, 30, 20, 75, 3);
+VALUES (3, 10, 8, 25, 17, SEQ_SLEEPDETAILS_ID.CURRVAL);
 INSERT INTO sleep_metrics (sleep_cycle, deep_sleep, awake, rem, light, sleep_details_sleep_id)
-VALUES (4, 55, 15, 15, 90, 4);
+VALUES (4, 5, 15, 20, 20, SEQ_SLEEPDETAILS_ID.CURRVAL);
 INSERT INTO sleep_metrics (sleep_cycle, deep_sleep, awake, rem, light, sleep_details_sleep_id)
-VALUES (5, 60, 10, 20, 80, 5);
+VALUES (5, 12, 10, 18, 20, SEQ_SLEEPDETAILS_ID.CURRVAL);
 INSERT INTO sleep_metrics (sleep_cycle, deep_sleep, awake, rem, light, sleep_details_sleep_id)
-VALUES (6, 35, 25, 20, 70, 6);
+VALUES (6, 7, 8, 15, 30, SEQ_SLEEPDETAILS_ID.CURRVAL);
 INSERT INTO sleep_metrics (sleep_cycle, deep_sleep, awake, rem, light, sleep_details_sleep_id)
-VALUES (7, 70, 5, 15, 80, 7);
+VALUES (7, 9, 12, 18, 21, SEQ_SLEEPDETAILS_ID.CURRVAL);
 INSERT INTO sleep_metrics (sleep_cycle, deep_sleep, awake, rem, light, sleep_details_sleep_id)
-VALUES (8, 30, 35, 15, 70, 8);
+VALUES (8, 15, 10, 8, 27, SEQ_SLEEPDETAILS_ID.CURRVAL);
 INSERT INTO sleep_metrics (sleep_cycle, deep_sleep, awake, rem, light, sleep_details_sleep_id)
-VALUES (9, 50, 20, 20, 85, 9);
+VALUES (9, 6, 9, 25, 20, SEQ_SLEEPDETAILS_ID.CURRVAL);
 INSERT INTO sleep_metrics (sleep_cycle, deep_sleep, awake, rem, light, sleep_details_sleep_id)
-VALUES (10, 65, 10, 25, 90, 10);
+VALUES (10, 14, 13, 8, 25, SEQ_SLEEPDETAILS_ID.CURRVAL);
 
---Health Details Table
+--adding health metrics when user is sleeping
+
 INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
-VALUES (TO_DATE('2023-11-01 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 95, 70, 'Normal', 120, 80, 1, 1, 1);
+VALUES(TO_DATE('2023-11-01 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 99, 62, 'Normal', 128, 88, SEQ_USER_ID.CURRVAL, null, SEQ_SLEEPDETAILS_ID.CURRVAL);
 INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
-VALUES(TO_DATE('2023-11-02 08:30:00', 'YYYY-MM-DD HH24:MI:SS'), 94, 72, 'Normal', 122, 82, 2, 2, 2);
+VALUES(TO_DATE('2023-11-01 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), 95, 63, 'Normal', 130, 90, SEQ_USER_ID.CURRVAL, null, SEQ_SLEEPDETAILS_ID.CURRVAL);
 INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
-VALUES(TO_DATE('2023-11-03 09:00:00', 'YYYY-MM-DD HH24:MI:SS'), 96, 68, 'Normal', 118, 78, 3, 3, 3);
+VALUES(TO_DATE('2023-11-02 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 94, 76, 'Normal', 132, 92, SEQ_USER_ID.CURRVAL, null, SEQ_SLEEPDETAILS_ID.CURRVAL);
 INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
-VALUES(TO_DATE('2023-11-04 09:30:00', 'YYYY-MM-DD HH24:MI:SS'), 93, 75, 'Normal', 124, 84, 4, 4, 4);
+VALUES(TO_DATE('2023-11-02 01:00:00', 'YYYY-MM-DD HH24:MI:SS'), 99, 46, 'Normal', 134, 94, SEQ_USER_ID.CURRVAL, null, SEQ_SLEEPDETAILS_ID.CURRVAL);
 INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
-VALUES(TO_DATE('2023-11-05 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 97, 73, 'Normal', 126, 86, 5, 5, 5);
+VALUES(TO_DATE('2023-11-02 02:00:00', 'YYYY-MM-DD HH24:MI:SS'), 99, 55, 'Normal', 136, 96, SEQ_USER_ID.CURRVAL, null, SEQ_SLEEPDETAILS_ID.CURRVAL);
 INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
-VALUES(TO_DATE('2023-11-06 10:30:00', 'YYYY-MM-DD HH24:MI:SS'), 92, 76, 'Normal', 128, 88, 6, 6, 6);
+VALUES(TO_DATE('2023-11-02 03:00:00', 'YYYY-MM-DD HH24:MI:SS'), 100, 49, 'Normal', 124, 84, SEQ_USER_ID.CURRVAL, null, SEQ_SLEEPDETAILS_ID.CURRVAL);
 INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
-VALUES(TO_DATE('2023-11-07 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), 98, 72, 'Normal', 130, 90, 7, 7, 7);
+VALUES(TO_DATE('2023-11-02 04:00:00', 'YYYY-MM-DD HH24:MI:SS'), 98, 50, 'Normal', 126, 86, SEQ_USER_ID.CURRVAL, null, SEQ_SLEEPDETAILS_ID.CURRVAL);
 INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
-VALUES(TO_DATE('2023-11-08 11:30:00', 'YYYY-MM-DD HH24:MI:SS'), 91, 78, 'Normal', 132, 92, 8, 8, 8);
+VALUES(TO_DATE('2023-11-02 05:00:00', 'YYYY-MM-DD HH24:MI:SS'), 99, 53, 'Normal', 130, 92, SEQ_USER_ID.CURRVAL, null, SEQ_SLEEPDETAILS_ID.CURRVAL);
 INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
-VALUES(TO_DATE('2023-11-09 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 99, 75, 'Normal', 134, 94, 9, 9, 9);
+VALUES(TO_DATE('2023-11-02 06:00:00', 'YYYY-MM-DD HH24:MI:SS'), 99, 57, 'Normal', 134, 94, SEQ_USER_ID.CURRVAL, null, SEQ_SLEEPDETAILS_ID.CURRVAL);
 INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
-VALUES(TO_DATE('2023-11-10 12:30:00', 'YYYY-MM-DD HH24:MI:SS'), 90, 80, 'Normal', 136, 96, 10, 10, 10);
+VALUES(TO_DATE('2023-11-02 07:00:00', 'YYYY-MM-DD HH24:MI:SS'), 99, 60, 'Normal', 125, 94, SEQ_USER_ID.CURRVAL, null, SEQ_SLEEPDETAILS_ID.CURRVAL);
+INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exericse_details_exercise_id, sleep_details_sleep_id)
+VALUES(TO_DATE('2023-11-01 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 99, 65, 'Normal', 120, 94, SEQ_USER_ID.CURRVAL, null, SEQ_SLEEPDETAILS_ID.CURRVAL);
+
+
+SELECT * FROM USER_DETAILS;
+SELECT * FROM body_composition;
+
+SELECT * FROM exericse_details;
+SELECT * FROm exercise_metrics;
+select * from health_details;
 
 
