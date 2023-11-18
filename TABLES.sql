@@ -68,7 +68,9 @@ CREATE TABLE user_details (
     country           VARCHAR2(200 CHAR) NOT NULL,
     states            VARCHAR2(200 CHAR) NOT NULL,
     zipcode           NUMBER NOT NULL, 
-    age               NUMBER NOT NULL
+    age               NUMBER NOT NULL,
+    sex               VARCHAR2(200 CHAR) NOT NULL
+    
 );
 
 -- ADDING  CONSTRATINTS TO USER_DETAILS
@@ -242,8 +244,13 @@ ALTER TABLE health_details
 --Adding Data to the tables
 --USER_DETAILS
 
+
+INSERT INTO user_details (user_id, first_name, last_name, email, street_address, city, country, states, zipcode, age,sex)
+VALUES (SEQ_USER_ID.NEXTVAL , 'John', 'Doe', 'john.doe@example.com', '123 Main St', 'BOSTON', 'UNITED STATES', 'MASSECHUSETS', 12345, 30,'Male');
+=======
 INSERT INTO user_details (user_id, first_name, last_name, email, street_address, city, country, states, zipcode, age)
 VALUES (SEQ_USER_ID.NEXTVAL , 'John', 'Doe', 'john.doe@example.com', '123 Main St', 'BOSTON', 'UNITED STATES', 'MASSECHUSETS', 12345, 30);
+
 
 INSERT INTO body_composition (body_composition_id, height, weight, skeletal_muscle_mass, fat_mass, body_fat, body_water, user_details_user_id)
 VALUES (SEQ_BODYCOMM_ID.NEXTVAL, 170, 70, 60, 15, 20, 45, SEQ_USER_ID.CURRVAL);
