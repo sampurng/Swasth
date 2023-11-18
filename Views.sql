@@ -18,9 +18,6 @@ SELECT
 FROM user_details LEFT JOIN body_composition ON user_details.user_id = body_composition.user_details_user_id;
 
 -- Exercise View --
-SELECT * From exercise_metrics;
-SELECT * from health_details;
-
 SELECT 
     exercise_group.exercise_id, 
     exercise_group.avg_blood_oxygen,
@@ -34,8 +31,57 @@ SELECT
             ROUND(AVG(HEART_RATE),2) as avg_heart_rate, 
             ROUND(AVG(BLOOD_OXYGEN),2) as avg_blood_oxygen, 
             ROUND(AVG(BP_SYSTOLIC), 2) as avg_bp_sys, 
-            ROUND(AVG(BP_DIASTOLIC),2) as avg_bp_dias, 
+            ROUND(AVG(BP_DIASTOLIC),2) as avg_bp_dias 
         FROM HEALTH_DETAILS 
         GROUP BY health_details.exercise_details_exercise_id
         ORDER BY exercise_id) exercise_group 
-    LEFT JOIN exercise_details ON exercise_group.exercise_id = exercise_details.exercise_id;
+    LEFT JOIN exercise_details ON exercise_group.exercise_id = exercise_details.exercise_id;    
+    
+-- Activities View for 100,000 steps per month sorted by suer with rank
+SELECT 
+activities_group.total_steps, 
+activities_group.user_id, 
+activities_group.rank, activities_group.month_name, 
+activities_group.total_steps/10000 as Progress 
+FROM (SELECT 
+    sum(exercise_metrics.steps) as total_steps, 
+    exercise_details.user_details_user_id as User_ID, 
+    dense_rank() over(order by sum(exercise_metrics.steps) desc) as Rank, 
+    TO_CHAR(SYSDATE, 'MON') as MONTH_NAME FROM exercise_details
+LEFT JOIN exercise_metrics on exercise_details.exercise_id = exercise_metrics.exercise_details_exercise_id 
+GROUP BY exercise_details.user_details_user_id) activities_group
+ORDER BY activities_group.rank;
+
+-- Sleep View 
+SELECT * FROM  
+(
+    SELECT 
+    SUM(REM) as rem,
+    SUM(DEEP_SLEEP) as deep_time, 
+    SUM(LIGHT) as light_time, 
+    SUM(AWAKE) as awake_time, 
+    sleep_details.sleep_id
+    FROM sleep_details left join sleep_metrics on sleep_details.sleep_id = sleep_metrics.sleep_details_sleep_id
+    GRoUP BY sleep_details.sleep_id
+) sleep_group 
+LEFT JOIN 
+(
+    SELECT 
+    ROUND(AVG(heart_rate), 2) as avg_hr, 
+    ROUND(avg(blood_oxygen), 2) as avg_bo, 
+    ROUND(avg(BP_SYSTOLIC), 2) as avg_bps, 
+    ROUND(avg(BP_DIASTOLIC), 2)as avg_bpd, 
+    health_details.user_details_user_id as user_id,
+    health_details.sleep_details_SLEEP_ID as sleep_id 
+    FROM health_details 
+    GROUP BY health_details.sleep_details_SLEEP_ID, health_details.user_details_user_id
+) sleep_health on sleep_health.sleep_id = sleep_group.sleep_id;
+
+
+-- User master view
+select * FROM user_details 
+    JOIN exercise_details ON user_details.user_id = exercise_details.user_details_user_id 
+    JOIN exercise_metrics on exercise_details.exercise_id = exercise_metrics.exercise_details_exercise_id
+    JOIN sleep_details ON user_details.user_Id = sleep_details.user_details_user_id
+    JOIN sleep_metrics ON sleep_details.sleep_id = sleep_metrics.sleep_details_sleep_id
+    JOIN health_details ON health_details.user_details_user_id = user_details.user_id;
