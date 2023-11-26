@@ -1,5 +1,6 @@
 
 -- Health Progress View --
+CREATE OR REPLACE VIEW health_progress_view AS 
 SELECT 
     user_details.user_id, 
     user_details.age, 
@@ -18,6 +19,7 @@ SELECT
 FROM user_details LEFT JOIN body_composition ON user_details.user_id = body_composition.user_details_user_id;
 
 -- Exercise View --
+CREATE OR REPLACE VIEW exercise_view AS
 SELECT 
     exercise_group.exercise_id, 
     exercise_group.avg_blood_oxygen,
@@ -38,6 +40,7 @@ SELECT
     LEFT JOIN exercise_details ON exercise_group.exercise_id = exercise_details.exercise_id;    
     
 -- Activities View for 100,000 steps per month sorted by suer with rank
+CREATE OR REPLACE VIEW activities_view AS 
 SELECT 
 activities_group.total_steps, 
 activities_group.user_id, 
@@ -53,10 +56,11 @@ GROUP BY exercise_details.user_details_user_id) activities_group
 ORDER BY activities_group.rank;
 
 -- Sleep View 
+CREATE OR REPLACE VIEW sleep_view AS 
 SELECT * FROM  
 (
     SELECT 
-    SUM(REM) as rem,
+    SUM(REM) as rem_time,
     SUM(DEEP_SLEEP) as deep_time, 
     SUM(LIGHT) as light_time, 
     SUM(AWAKE) as awake_time, 
@@ -72,14 +76,41 @@ LEFT JOIN
     ROUND(avg(BP_SYSTOLIC), 2) as avg_bps, 
     ROUND(avg(BP_DIASTOLIC), 2)as avg_bpd, 
     health_details.user_details_user_id as user_id,
-    health_details.sleep_details_SLEEP_ID as sleep_id 
+    health_details.sleep_details_SLEEP_ID as sleep_id2
     FROM health_details 
     GROUP BY health_details.sleep_details_SLEEP_ID, health_details.user_details_user_id
 ) sleep_health on sleep_health.sleep_id = sleep_group.sleep_id;
 
 
 -- User master view
-select * FROM user_details 
+CREATE OR REPLACE VIEW user_overview AS
+SELECT 
+    user_details.user_id, 
+    user_details.first_name, 
+    user_details.last_name,
+    user_details.email,
+    exercise_details.exercise_id,
+    exercise_details.type,
+    exercise_details.from_exercise_time,
+    exercise_details.to_exercise_time,
+    exercise_metrics.interval, 
+    exercise_metrics.calories, 
+    exercise_metrics.steps, 
+    exercise_metrics.active_time, 
+    sleep_details.sleep_id, 
+    sleep_details.from_sleep_time, 
+    sleep_details.to_sleep_time, 
+    sleep_metrics.sleep_cycle, 
+    sleep_metrics.deep_sleep, 
+    sleep_metrics.awake, 
+    sleep_metrics.rem, 
+    sleep_metrics.light, 
+    health_details.time_of_activity, 
+    health_details.blood_oxygen, 
+    health_details.ecg, 
+    health_details.bp_systolic, 
+    health_details.bp_diastolic
+FROM user_details 
     JOIN exercise_details ON user_details.user_id = exercise_details.user_details_user_id 
     JOIN exercise_metrics on exercise_details.exercise_id = exercise_metrics.exercise_details_exercise_id
     JOIN sleep_details ON user_details.user_Id = sleep_details.user_details_user_id
