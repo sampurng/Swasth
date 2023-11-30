@@ -640,6 +640,7 @@ SELECT * FROM body_composition;
 SELECT * FROM exercise_details;
 SELECT * FROm exercise_metrics;
 select * from health_details;
+SELECT * FROM sleep_details;
 
 
 
