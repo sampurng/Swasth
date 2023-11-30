@@ -1,4 +1,3 @@
-
 -- Health Progress View --
 CREATE OR REPLACE VIEW health_progress_view AS 
 SELECT 
@@ -64,8 +63,8 @@ SELECT * FROM
     SUM(DEEP_SLEEP) as deep_time, 
     SUM(LIGHT) as light_time, 
     SUM(AWAKE) as awake_time, 
-    sleep_details.sleep_id as sleep_id1
-    FROM sleep_details left join sleep_metrics on sleep_id1 = sleep_metrics.sleep_details_sleep_id
+    sleep_details.sleep_id as sleep_id2
+    FROM sleep_details left join sleep_metrics on sleep_details.sleep_id = sleep_metrics.sleep_details_sleep_id
     GRoUP BY sleep_details.sleep_id
 ) sleep_group 
 LEFT JOIN 
@@ -76,10 +75,10 @@ LEFT JOIN
     ROUND(avg(BP_SYSTOLIC), 2) as avg_bps, 
     ROUND(avg(BP_DIASTOLIC), 2)as avg_bpd, 
     health_details.user_details_user_id as user_id,
-    health_details.sleep_details_SLEEP_ID as sleep_id2
+    health_details.sleep_details_sleep_id as sleep_id
     FROM health_details 
-    GROUP BY health_details.sleep_details_SLEEP_ID, health_details.user_details_user_id
-) sleep_health on sleep_health.sleep_id2 = sleep_group.sleep_id1;
+    GROUP BY health_details.sleep_details_sleep_id, health_details.user_details_user_id
+) sleep_health on sleep_health.sleep_id = sleep_group.sleep_id2;
 
 
 -- User master view
