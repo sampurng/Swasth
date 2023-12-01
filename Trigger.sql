@@ -1,23 +1,35 @@
 -- Trigger 1: Generate a trigger when max_steps i.e 10,000 steps per day is reached
+SET SERVEROUTPUT ON
+/
 CREATE OR REPLACE TRIGGER max_steps_trigger
 AFTER INSERT ON exercise_metrics
 FOR EACH ROW
 DECLARE
-    total_steps NUMBER;
+    CURSOR CUR_TOTAL_STEPS_PER_USER_PER_DAY IS 
+    SELECT 
+    sum(steps) as total_steps,
+    to_exercise_time,
+    sum(calories) as total_calories,
+    sum(active_time) as total_active_time,
+    user_details_user_id
+FROM 
+    exercise_metrics LEFT JOIN exercise_details 
+    ON exercise_metrics.exercise_details_exercise_id = exercise_details.exercise_id
+GROUP BY 
+    to_exercise_time,
+    user_details_user_id
+HAVING
+    sum(steps) > 10000;    
 BEGIN
-    SELECT SUM(steps)
-    INTO total_steps
-    FROM exercise_metrics em
-    WHERE em.user_details_user_id = :NEW.user_details_user_id
-      AND TRUNC(em.from_exercise_time) = TRUNC(SYSDATE);
-
-    IF total_steps >= 10000 THEN
-        -- Your action when max steps are reached goes here
-        DBMS_OUTPUT.PUT_LINE('Max steps reached for the day!');
-        -- You can add more actions or call a procedure here
-    END IF;
+    FOR USERS_COMPLETED_DAILY_CHALLENGE IN CUR_TOTAL_STEPS_PER_USER_PER_DAY LOOP
+        DBMS_OUTPUT.PUT_LINE('User ' || USERS_COMPLETED_DAILY_CHALLENGE.USER_DETAILS_USER_ID || ' has completed their daily steps ('||USERS_COMPLETED_DAILY_CHALLENGE.total_steps|| ') challenge for Day : ' || USERS_COMPLETED_DAILY_CHALLENGE.to_exercise_time);
+    END LOOP;
 END;
 /
+
+
+-- INSERT INTO exercise_metrics (interval, calories, steps, active_time, exercise_details_exercise_id)
+-- VALUES (11, 100, 20000, 20, 2023300009);
 
 -- Trigger 2: Generate a trigger when max_calories i.e 1000 calories per day is reached
 CREATE OR REPLACE TRIGGER max_calories_trigger
