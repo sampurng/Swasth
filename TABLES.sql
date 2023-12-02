@@ -635,7 +635,16 @@ VALUES(TO_DATE('2023-11-02 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 99, 65, 'Normal'
 
 ---
 SELECT * FROM USER_DETAILS;
+
 SELECT * FROM BODY_COMPOSITION;
+=======
+SELECT * FROM body_composition;
+
+SELECT * FROM exercise_details;
+SELECT * FROm exercise_metrics;
+select * from health_details;
+SELECT * FROM sleep_details;
+
 
 SELECT * FROM EXERCISE_DEATILS;
 SELECT * FROm EXERCISE_METRICS;
