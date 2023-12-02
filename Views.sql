@@ -41,10 +41,10 @@ SELECT
 -- Activities View for 100,000 steps per month sorted by user with rank
 CREATE OR REPLACE VIEW activities_view AS 
 SELECT 
-activities_group.total_steps, 
-activities_group.user_id, 
-activities_group.rank, activities_group.month_name, 
-activities_group.total_steps/10000 as Progress
+    activities_group.total_steps, 
+    activities_group.user_id, 
+    activities_group.rank, activities_group.month_name, 
+    activities_group.total_steps/10000 as Progress
 FROM (SELECT 
     sum(exercise_metrics.steps) as total_steps, 
     exercise_details.user_details_user_id as User_ID, 
@@ -116,3 +116,18 @@ FROM user_details
     JOIN sleep_metrics ON sleep_details.sleep_id = sleep_metrics.sleep_details_sleep_id
     JOIN health_details ON health_details.user_details_user_id = user_details.user_id;
     
+    
+-- Daily Goals View
+CREATE OR REPLACE VIEW daily_goals_view AS
+SELECT 
+    sum(steps) as total_steps,
+    to_exercise_time,
+    sum(calories) as total_calories,
+    sum(active_time) as total_active_time,
+    user_details_user_id
+FROM 
+    exercise_metrics LEFT JOIN exercise_details 
+    ON exercise_metrics.exercise_details_exercise_id = exercise_details.exercise_id
+GROUP BY 
+    to_exercise_time,
+    user_details_user_id;

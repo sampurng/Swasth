@@ -3,44 +3,12 @@ SET SERVEROUTPUT ON
 /
 CREATE OR REPLACE TRIGGER max_steps_trigger
 AFTER INSERT ON exercise_metrics
-FOR EACH ROW
 DECLARE
     CURSOR CUR_TOTAL_STEPS_PER_USER_PER_DAY IS 
     SELECT 
-    sum(steps) as total_steps,
-    to_exercise_time,
-    sum(calories) as total_calories,
-    sum(active_time) as total_active_time,
-    user_details_user_id
-FROM 
-    exercise_metrics LEFT JOIN exercise_details 
-    ON exercise_metrics.exercise_details_exercise_id = exercise_details.exercise_id
-GROUP BY 
-    to_exercise_time,
-    user_details_user_id
-HAVING
-    sum(steps) > 10000;    
-BEGIN
-    FOR USERS_COMPLETED_DAILY_CHALLENGE IN CUR_TOTAL_STEPS_PER_USER_PER_DAY LOOP
-        DBMS_OUTPUT.PUT_LINE('User ' || USERS_COMPLETED_DAILY_CHALLENGE.USER_DETAILS_USER_ID || ' has completed their daily steps ('||USERS_COMPLETED_DAILY_CHALLENGE.total_steps|| ') challenge for Day : ' || USERS_COMPLETED_DAILY_CHALLENGE.to_exercise_time);
-    END LOOP;
-END;
-/
-
-
--- INSERT INTO exercise_metrics (interval, calories, steps, active_time, exercise_details_exercise_id)
--- VALUES (11, 100, 20000, 20, 2023300009);
-
--- Trigger 2: Generate a trigger when max_calories i.e 1000 calories per day is reached
-
-CREATE OR REPLACE TRIGGER max_calorie_trigger
-AFTER INSERT ON exercise_metrics
-FOR EACH ROW
-DECLARE
-    CURSOR CUR_TOTAL_CALORIES_PER_USER_PER_DAY IS 
-    SELECT 
-        SUM(calories) as total_calories,
+        sum(steps) as total_steps,
         to_exercise_time,
+        sum(calories) as total_calories,
         sum(active_time) as total_active_time,
         user_details_user_id
     FROM 
@@ -50,70 +18,25 @@ DECLARE
         to_exercise_time,
         user_details_user_id
     HAVING
-        SUM(calories) >= 1000;    
+        sum(steps) > 1000;    
 BEGIN
-    FOR USERS_COMPLETED_DAILY_CALORIES IN CUR_TOTAL_CALORIES_PER_USER_PER_DAY LOOP
-        DBMS_OUTPUT.PUT_LINE('User ' || USERS_COMPLETED_DAILY_CALORIES.USER_DETAILS_USER_ID || ' has reached their daily calorie limit (' || USERS_COMPLETED_DAILY_CALORIES.total_calories || ' calories) for Day : ' || USERS_COMPLETED_DAILY_CALORIES.to_exercise_time);
-        -- Your additional actions or procedure calls can be added here
+    FOR USERS_COMPLETED_DAILY_CHALLENGE IN CUR_TOTAL_STEPS_PER_USER_PER_DAY LOOP
+        DBMS_OUTPUT.PUT_LINE('User ' || USERS_COMPLETED_DAILY_CHALLENGE.USER_DETAILS_USER_ID || ' has completed their daily steps ('||USERS_COMPLETED_DAILY_CHALLENGE.total_steps|| ') challenge for Day : ' || USERS_COMPLETED_DAILY_CHALLENGE.to_exercise_time);
     END LOOP;
 END;
 /
 
 
-=======
-CREATE OR REPLACE TRIGGER max_calories_trigger
-AFTER INSERT ON exercise_metrics
-FOR EACH ROW
-DECLARE
-    total_calories NUMBER;
-BEGIN
-    SELECT SUM(calories)
-    INTO total_calories
-    FROM exercise_metrics em
-    WHERE em.user_details_user_id = :NEW.user_details_user_id
-      AND TRUNC(em.from_exercise_time) = TRUNC(SYSDATE);
+INSERT INTO exercise_metrics (interval, calories, steps, active_time, exercise_details_exercise_id)
+VALUES (12, 100, 145, 20, 2023300002);
 
-    IF total_calories >= 1000 THEN
-        -- Your action when max calories are reached goes here
-        DBMS_OUTPUT.PUT_LINE('Max calories reached for the day!');
-        -- You can add more actions or call a procedure here
-    END IF;
-END;
-/
+-- drop trigger max_steps_trigger;
+-- drop trigger MAX_CALORIES_TRIGGER; 
+-- drop trigger heart_rate_trigger;
+
+-- ALTER TRIGGER max_calorie_trigger DISABLE;
+
+-- select * from user_errors where type = 'TRIGGER' and name = 'NEWALERT';
 
 
--- Trigger 3: Generate a trigger when heart_rate is less than 54 and more than 200
-CREATE OR REPLACE TRIGGER heart_rate_trigger
-BEFORE INSERT ON health_details
-FOR EACH ROW
-DECLARE
-
-    CURSOR CUR_OUT_OF_RANGE_HEART_RATE IS 
-    SELECT 
-        heart_rate,
-        user_details_user_id
-    FROM 
-        health_details
-    WHERE 
-        heart_rate < 54 OR heart_rate > 200;    
-BEGIN
-    FOR USERS_OUT_OF_RANGE_HEART_RATE IN CUR_OUT_OF_RANGE_HEART_RATE LOOP
-        DBMS_OUTPUT.PUT_LINE('User ' || USERS_OUT_OF_RANGE_HEART_RATE.USER_DETAILS_USER_ID || ' has an out-of-range heart rate (' || USERS_OUT_OF_RANGE_HEART_RATE.heart_rate || ')');
-        -- Your additional actions or procedure calls can be added here
-    END LOOP;
-END;
-/
-=======
-    heart_rate_value NUMBER;
-BEGIN
-    heart_rate_value := :NEW.heart_rate;
-
-    IF heart_rate_value < 54 OR heart_rate_value > 200 THEN
-        -- Your action when heart rate is out of range goes here
-        DBMS_OUTPUT.PUT_LINE('Heart rate out of range!');
-        -- You can add more actions or call a procedure here
-    END IF;
-END;
-/
-
-
+-- Trigger 2 : MAximum calorie tr
