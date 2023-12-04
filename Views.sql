@@ -132,3 +132,6 @@ FROM
 GROUP BY 
     to_exercise_time,
     user_details_user_id;
+
+
+Commit;
