@@ -71,7 +71,10 @@ CREATE TABLE user_details (
     states            VARCHAR2(200 CHAR) NOT NULL,
     zipcode           NUMBER NOT NULL, 
     age               NUMBER NOT NULL, 
-    sex               VARCHAR(1) NOT NULL
+    sex               VARCHAR(1) NOT NULL, 
+    CONSTRAINT chk_age CHECK(age >13), 
+    CONSTRAINT chk_sex CHECK(sex IN ('M', 'F')), 
+    CONSTRAINT chk_zipcode CHECK(LENGTH(zipcode) > 4)
     
 );
 
@@ -95,7 +98,8 @@ CREATE TABLE body_composition (
     fat_mass             NUMBER,
     body_fat             NUMBER,
     body_water           NUMBER,
-    user_details_user_id NUMBER NOT NULL
+    user_details_user_id NUMBER NOT NULL, 
+    CONSTRAINT chk_negatives_bodyComposiiton CHECK(height > 0 AND weight > 0 AND skeletal_muscle_mass > 0 AND fat_mass > 0 AND body_water > 0 AND body_fat > 3 AND body_fat < 100)
 );
 
 -- ADDING  CONSTRATINTS TO BODY_COMPOSITION--------
@@ -122,7 +126,8 @@ CREATE TABLE exercise_details (
     type                 VARCHAR2(10 CHAR) NOT NULL,
     from_exercise_time   DATE NOT NULL,
     to_exercise_time     DATE NOT NULL,
-    user_details_user_id NUMBER NOT NULL
+    user_details_user_id NUMBER NOT NULL, 
+    CONSTRAINT chk_time_diff_exerciseDetails CHECK(to_exercise_time > from_exercise_time)
 );
 
 ------ ADDING  CONSTRATINTS TO EXERCISE_DETAILS --------
@@ -149,7 +154,8 @@ CREATE TABLE exercise_metrics (
     calories                     NUMBER NOT NULL,
     steps                        NUMBER,
     active_time                  NUMBER,
-    exercise_details_exercise_id NUMBER NOT NULL
+    exercise_details_exercise_id NUMBER NOT NULL,
+    CONSTRAINT chk_negatives_exerciseMetrics CHECK(steps >= 0 AND calories > 0 AND active_time >= 0)
 );
 
 ------ ADDING  CONSTRATINTS TO EXERCISE_METRICS --------
@@ -174,7 +180,8 @@ CREATE TABLE sleep_details (
     sleep_id             NUMBER NOT NULL,
     from_sleep_time      DATE NOT NULL,
     to_sleep_time        DATE NOT NULL,
-    user_details_user_id NUMBER NOT NULL
+    user_details_user_id NUMBER NOT NULL,
+    CONSTRAINT chk_time_diff_SleepDetails CHECK(to_Sleep_time > from_sleep_time)
 );
 
 ------ ADDING  CONSTRATINTS TO SLEEP_DETAILS --------
@@ -200,7 +207,8 @@ CREATE TABLE sleep_metrics (
     awake                  NUMBER,
     rem                    NUMBER,
     light                  NUMBER,
-    sleep_details_sleep_id NUMBER NOT NULL
+    sleep_details_sleep_id NUMBER NOT NULL,
+    CONSTRAINT chk_negatives_sleepMetrics CHECK(sleep_cycle > 0 AND deep_sleep >=0 AND awake >= 0 AND rem >= 0 AND light >= 0)
 );
 
 ------ ADDING  CONSTRATINTS TO SLEEP_METRICS --------
@@ -229,7 +237,8 @@ CREATE TABLE health_details (
     bp_diastolic                 NUMBER,
     user_details_user_id         NUMBER NOT NULL,
     exercise_details_exercise_id NUMBER,
-    sleep_details_sleep_id       NUMBER
+    sleep_details_sleep_id       NUMBER,
+    CONSTRAINT chk_validity_healthDetails CHECK(blood_oxygen > 0 AND blood_oxygen <= 100 AND heart_rate > 10 AND heart_rate < 300 AND bp_systolic > 0 AND bp_diastolic > 0)
 );
 
 ------ ADDING  CONSTRATINTS TO HEALTH_DETAILS --------
@@ -423,7 +432,7 @@ INSERT INTO exercise_metrics (interval, calories, steps, active_time, exercise_d
 VALUES (1, 85, 850, 16,  SEQ_EXERCISEDETAILS_ID.CURRVAL);
 
 INSERT INTO exercise_details (exercise_id, type, from_exercise_time, to_exercise_time, user_details_user_id)
-VALUES(SEQ_EXERCISEDETAILS_ID.NEXTVAL, 'cycling', TO_DATE('2023-11-29 09:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-10-02 09:30:00', 'YYYY-MM-DD HH24:MI:SS'), SEQ_USER_ID.CURRVAL);
+VALUES(SEQ_EXERCISEDETAILS_ID.NEXTVAL, 'cycling', TO_DATE('2023-11-29 09:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-11-29 09:30:00', 'YYYY-MM-DD HH24:MI:SS'), SEQ_USER_ID.CURRVAL);
 
 --measuring again for exercise
 INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exercise_details_exercise_id, sleep_details_sleep_id)
@@ -552,7 +561,7 @@ INSERT INTO exercise_metrics (interval, calories, steps, active_time, exercise_d
 VALUES (1, 89, 900, 16,  SEQ_EXERCISEDETAILS_ID.CURRVAL);
 
 INSERT INTO exercise_details (exercise_id, type, from_exercise_time, to_exercise_time, user_details_user_id)
-VALUES(SEQ_EXERCISEDETAILS_ID.NEXTVAL, 'swimmig', TO_DATE('2023-11-30 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-10-01 08:30:00', 'YYYY-MM-DD HH24:MI:SS'), SEQ_USER_ID.CURRVAL);
+VALUES(SEQ_EXERCISEDETAILS_ID.NEXTVAL, 'swimmig', TO_DATE('2023-11-30 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-11-30 08:30:00', 'YYYY-MM-DD HH24:MI:SS'), SEQ_USER_ID.CURRVAL);
 
 --measuring again for exercise
 INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exercise_details_exercise_id, sleep_details_sleep_id)
@@ -643,7 +652,4 @@ SELECT * FROM exercise_details;
 SELECT * FROm exercise_metrics;
 select * from health_details;
 SELECT * FROM sleep_details;
-
-
-
 
