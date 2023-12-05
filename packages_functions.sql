@@ -151,15 +151,3 @@ BEGIN
 END;
 /
 
--- Call calculate_sleep_metrics_average
-ACCEPT sleep_id_prompt NUMBER PROMPT 'Enter Sleep ID: ';
-
-DECLARE
-    v_sleep_id NUMBER := &sleep_id_prompt;
-    v_sleep_result VARCHAR2(200);
-BEGIN
-    v_sleep_result := health_metrics_pkg.calculate_sleep_metrics_average(v_sleep_id);
-    DBMS_OUTPUT.PUT_LINE('Sleep Metrics for Sleep ID ' || v_sleep_id || ':');
-    DBMS_OUTPUT.PUT_LINE(v_sleep_result);
-END;
-/
