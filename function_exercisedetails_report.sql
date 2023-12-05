@@ -36,8 +36,9 @@ END;
 
 ACCEPT user_id_prompt NUMBER PROMPT 'Enter User ID: ';
 
-DECLARE
-    v_user_id NUMBER := &user_id_prompt;
+CREATE OR REPLACE PROCEDURE CALL_EXERCISE(user_id_prompt NUMBER)
+AS
+    v_user_id NUMBER := user_id_prompt;
     v_result SYS_REFCURSOR;
     v_exercise_id NUMBER;
     v_total_calories NUMBER;
@@ -60,3 +61,8 @@ BEGIN
     END IF;
 END;
 /
+
+
+--EXECUTE CALL_EXERCISE;
+
+commit;

@@ -31,12 +31,16 @@ EXCEPTION
         RETURN 'An error occurred';
 END;
 /
-ACCEPT user_id_prompt NUMBER PROMPT 'Enter User ID: '
+--ACCEPT user_id_prompt NUMBER PROMPT 'Enter User ID: '
 
-DECLARE
+CREATE OR REPLACE PROCEDURE CALL_HEALTH(user_id_prompt NUMBER) 
+AS
     v_result VARCHAR2(200);
 BEGIN
-    v_result := generate_health_report(&user_id_prompt);
+    v_result := generate_health_report(user_id_prompt);
     DBMS_OUTPUT.PUT_LINE(v_result);
 END;
 /
+
+
+

@@ -17,6 +17,7 @@ SELECT
     ROUND(body_composition.weight/( body_composition.height/100 * body_composition.height/100), 2) as BMI
 FROM user_details LEFT JOIN body_composition ON user_details.user_id = body_composition.user_details_user_id;
 
+--SELECT * From health_progress_view;
 -- Exercise View --
 CREATE OR REPLACE VIEW exercise_view AS
 SELECT 
@@ -137,5 +138,5 @@ GROUP BY
     to_exercise_time,
     user_details_user_id;
 
-SELECT * FROM daily_goals_view;
+--SELECT * FROM daily_goals_view;
 Commit;
