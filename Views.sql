@@ -106,6 +106,7 @@ SELECT
     sleep_metrics.light, 
     health_details.time_of_activity, 
     health_details.blood_oxygen, 
+    health_details.heart_rate,
     health_details.ecg, 
     health_details.bp_systolic, 
     health_details.bp_diastolic
@@ -131,3 +132,6 @@ FROM
 GROUP BY 
     to_exercise_time,
     user_details_user_id;
+
+
+Commit;
