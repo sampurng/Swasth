@@ -54,6 +54,6 @@ END;
 -- INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exercise_details_exercise_id, sleep_details_sleep_id)
 -- VALUES(TO_DATE('2023-10-04 09:09:00', 'YYYY-MM-DD HH24:MI:SS'), 97, 211, 'Normal', 125, 95, 2023100003, 2023300009, null);
 
--- Trigger 3: Blood Oxygen dropping below
+
 
  
