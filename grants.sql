@@ -88,6 +88,28 @@ CREATE USER sclient IDENTIFIED BY SwasthGroupProject1;
 GRANT SWASTH_CLIENT TO sclient; 
 /
 
+--DROP USER SCLIENT;
+--DROP USER SEVENTMANAGER;
+--DROP USER SADMIN;
+--SELECT * FROM DBA_USERS;
+--DROP USER sADMIN;
+--DROP USER SEVENTMANAGER CASCADE;
+Commit;
+
+--SELECT * FROM activities_view;
+--GRANT SWASTH_ADMIN to sadmin;
+
+--GRANT SWASTh_EVENT_MANAGER to seventmanager;
+
+--GRANT SWASTH_CLIENT TO sclient;
+
+--SELECT grantee, privilege, table_name FROM ALL_TAB_PRIVS WHERE GRANTEE = 'SADMIN';
+
+--Grant select, update, insert, delete on activities_view to seventmanager;
+
+--GRANT 
+
+SELECT * from v$session;
 
 
 
