@@ -118,20 +118,7 @@ FROM user_details
     JOIN health_details ON health_details.user_details_user_id = user_details.user_id;
     
     
--- Daily Goals View
-CREATE OR REPLACE VIEW daily_goals_view AS
-SELECT 
-    sum(steps) as total_steps,
-    to_exercise_time,
-    sum(calories) as total_calories,
-    sum(active_time) as total_active_time,
-    user_details_user_id
-FROM 
-    exercise_metrics LEFT JOIN exercise_details 
-    ON exercise_metrics.exercise_details_exercise_id = exercise_details.exercise_id
-GROUP BY 
-    to_exercise_time,
-    user_details_user_id;
+
 
 
 Commit;
