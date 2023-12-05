@@ -20,6 +20,7 @@ FROM user_details LEFT JOIN body_composition ON user_details.user_id = body_comp
 -- Exercise View --
 CREATE OR REPLACE VIEW exercise_view AS
 SELECT 
+    exercise_group.user_id,
     exercise_group.exercise_id, 
     exercise_group.avg_blood_oxygen,
     exercise_group.avg_heart_rate,
@@ -28,13 +29,14 @@ SELECT
     abs(exercise_details.from_exercise_time -  exercise_details.to_exercise_time) as exercise_duration
     FROM (
         SELECT 
+            user_details_user_id as user_id,
             exercise_details_exercise_id as exercise_id, 
             ROUND(AVG(HEART_RATE),2) as avg_heart_rate, 
             ROUND(AVG(BLOOD_OXYGEN),2) as avg_blood_oxygen, 
             ROUND(AVG(BP_SYSTOLIC), 2) as avg_bp_sys, 
             ROUND(AVG(BP_DIASTOLIC),2) as avg_bp_dias 
         FROM HEALTH_DETAILS 
-        GROUP BY health_details.exercise_details_exercise_id
+        GROUP BY user_details_user_id, health_details.exercise_details_exercise_id
         ORDER BY exercise_id) exercise_group 
     LEFT JOIN exercise_details ON exercise_group.exercise_id = exercise_details.exercise_id;    
     
@@ -43,7 +45,8 @@ CREATE OR REPLACE VIEW activities_view AS
 SELECT 
     activities_group.total_steps, 
     activities_group.user_id, 
-    activities_group.rank, activities_group.month_name, 
+    activities_group.rank, 
+    activities_group.month_name, 
     activities_group.total_steps/10000 as Progress
 FROM (SELECT 
     sum(exercise_metrics.steps) as total_steps, 
@@ -59,10 +62,10 @@ CREATE OR REPLACE VIEW sleep_view AS
 SELECT * FROM  
 (
     SELECT 
-    SUM(REM) as rem_time,
-    SUM(DEEP_SLEEP) as deep_time, 
-    SUM(LIGHT) as light_time, 
-    SUM(AWAKE) as awake_time, 
+    AVG(REM) as rem_time,
+    AVG(DEEP_SLEEP) as deep_time, 
+    AVG(LIGHT) as light_time, 
+    AVG(AWAKE) as awake_time, 
     sleep_details.sleep_id as sleep_id2
     FROM sleep_details left join sleep_metrics on sleep_details.sleep_id = sleep_metrics.sleep_details_sleep_id
     GRoUP BY sleep_details.sleep_id
@@ -79,7 +82,6 @@ LEFT JOIN
     FROM health_details 
     GROUP BY health_details.sleep_details_sleep_id, health_details.user_details_user_id
 ) sleep_health on sleep_health.sleep_id = sleep_group.sleep_id2;
-
 
 -- User master view
 CREATE OR REPLACE VIEW user_overview AS
@@ -123,6 +125,7 @@ CREATE OR REPLACE VIEW daily_goals_view AS
 SELECT 
     sum(steps) as total_steps,
     to_exercise_time,
+    exercise_id,
     sum(calories) as total_calories,
     sum(active_time) as total_active_time,
     user_details_user_id
@@ -130,8 +133,9 @@ FROM
     exercise_metrics LEFT JOIN exercise_details 
     ON exercise_metrics.exercise_details_exercise_id = exercise_details.exercise_id
 GROUP BY 
+    exercise_id,
     to_exercise_time,
     user_details_user_id;
 
-
+SELECT * FROM daily_goals_view;
 Commit;
