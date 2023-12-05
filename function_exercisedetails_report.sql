@@ -14,16 +14,14 @@ BEGIN
 
     IF v_user_count > 0 THEN
         OPEN my_cursor FOR
-        SELECT 
-            ed.exercise_id AS exercise_id,
-            SUM(em.calories) AS total_calories,
-            SUM(em.steps) AS total_steps,
-            SUM(em.active_time) AS total_active_time
-        FROM exercise_metrics em
-        JOIN exercise_details ed ON em.exercise_details_exercise_id = ed.exercise_id
-        WHERE ed.user_details_user_id = p_user_id
-        GROUP BY ed.exercise_id;
-
+        SELECT
+            exercise_id,
+            total_calories, 
+            total_steps, 
+            total_active_time
+        FROM daily_goals_view 
+        WHERE user_details_user_id = p_user_id 
+        AND exercise_id IS NOT NULL;
         RETURN my_cursor;
     ELSE
         DBMS_OUTPUT.PUT_LINE('User ID is not valid or does not exist');
@@ -54,7 +52,7 @@ BEGIN
             FETCH v_result INTO v_exercise_id, v_total_calories, v_total_steps, v_total_active_time;
             EXIT WHEN v_result%NOTFOUND;
             -- Print fetched values
-            DBMS_OUTPUT.PUT_LINE('Exercise ID: ' || v_exercise_id || ', Calories: ' || v_total_calories || ', Steps: ' || v_total_steps || ', Active Time: ' || v_total_active_time);
+            DBMS_OUTPUT.PUT_LINE('Exercise ID: ' || v_exercise_id || ', Average heart Rate: ' || v_total_calories || ', Steps: ' || v_total_steps || ', Active Time: ' || v_total_active_time);
         END LOOP;
 
         -- Close the cursor
