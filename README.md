@@ -31,11 +31,11 @@ Setting up this database locally or ona private instance is quite straightforwar
 
 ### Step 1
 Download all scripts and run them in the following order
-    - Tables.sql
-    - Views.sql
-    - Trigger.sql
-    - Function_exercise_details.sql
-    - function_healthdetails_report.sql
-    - function_sleepdetails_report.sql
-    - grants.sql
+- Tables.sql
+- Views.sql
+- Trigger.sql
+- Function_exercise_details.sql
+- function_healthdetails_report.sql
+- function_sleepdetails_report.sql
+- grants.sql
 
