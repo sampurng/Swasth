@@ -29,7 +29,7 @@ This project can be viewd on the oracle cloud for which the wallet is provided i
 ### Running the SQL locally / on your own server
 Setting up this database locally or ona private instance is quite straightforward. 
 
-### Step 1
+### Starting the Application
 Download all scripts and run them in the following order
 - Tables.sql
 - Views.sql
