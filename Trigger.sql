@@ -13,10 +13,10 @@ BEGIN
 END;
 /
 
--- SELECT * from daily_goals_view WHERE total_steps > 10000 OR total_calories > 700 OR total_active_time > 100;
+--SELECT * from daily_goals_view WHERE total_steps > 10000 OR total_calories > 700 OR total_active_time > 100;
 
-INSERT INTO exercise_metrics (interval, calories, steps, active_time, exercise_details_exercise_id)
-VALUES (24, 1000, 12310, 10, 2023300002);
+--INSERT INTO exercise_metrics (interval, calories, steps, active_time, exercise_details_exercise_id)
+--VALUES (24, 1000, 12310, 10, 2023300002);
 
 -- drop trigger max_steps_trigger;
 -- drop trigger MAX_CALORIES_TRIGGER; 
@@ -52,8 +52,8 @@ END;
 
 -- select * from health_details;
 
---INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exercise_details_exercise_id, sleep_details_sleep_id)
---VALUES(TO_DATE('2023-10-04 09:09:00', 'YYYY-MM-DD HH24:MI:SS'), 97, 211, 'Normal', 125, 95, 2023100003, 2023300009, null);
+INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exercise_details_exercise_id, sleep_details_sleep_id)
+VALUES(TO_DATE('2023-10-04 09:09:00', 'YYYY-MM-DD HH24:MI:SS'), 97, 211, 'Normal', 125, 95, 2023100003, 2023300009, null);
 
 
 

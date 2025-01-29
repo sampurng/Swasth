@@ -138,5 +138,5 @@ GROUP BY
     to_exercise_time,
     user_details_user_id;
 
---SELECT * FROM daily_goals_view;
+--SELECT * FROM activities_view;
 Commit;

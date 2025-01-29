@@ -64,7 +64,7 @@ CREATE TABLE user_details (
     user_id           NUMBER NOT NULL,
     first_name        VARCHAR2(200 CHAR) NOT NULL,
     last_name         VARCHAR2(200 CHAR),
-    email             VARCHAR2(200 CHAR) NOT NULL,
+    email             VARCHAR2(200 CHAR) UNIQUE NOT NULL,
     street_address    VARCHAR2(200 CHAR) NOT NULL,
     city              VARCHAR2(200 CHAR) NOT NULL,
     country           VARCHAR2(200 CHAR) NOT NULL,
@@ -75,7 +75,6 @@ CREATE TABLE user_details (
     CONSTRAINT chk_age CHECK(age >13), 
     CONSTRAINT chk_sex CHECK(sex IN ('M', 'F')), 
     CONSTRAINT chk_zipcode CHECK(LENGTH(zipcode) > 4)
-    
 );
 
 -- ADDING  CONSTRATINTS TO USER_DETAILS
@@ -239,7 +238,8 @@ CREATE TABLE health_details (
     user_details_user_id         NUMBER NOT NULL,
     exercise_details_exercise_id NUMBER,
     sleep_details_sleep_id       NUMBER,
-    CONSTRAINT chk_validity_healthDetails CHECK(blood_oxygen > 0 AND blood_oxygen <= 100 AND heart_rate > 10 AND heart_rate < 300 AND bp_systolic > 0 AND bp_diastolic > 0)
+    CONSTRAINT chk_validity_healthDetails CHECK(blood_oxygen > 0 AND blood_oxygen <= 100 AND heart_rate > 10 AND heart_rate < 300 AND bp_systolic > 0 AND bp_diastolic > 0),
+    CONSTRAINT chk_sleep_exercise_same_time CHECK(exercise_details_exercise_id IS NULL OR sleep_details_sleep_id IS NULL)
 );
 
 ------ ADDING  CONSTRATINTS TO HEALTH_DETAILS --------
@@ -737,6 +737,9 @@ INSERT INTO sleep_metrics (sleep_cycle, deep_sleep, awake, rem, light, sleep_det
 VALUES (9, 6, 8, 22, 8, SEQ_SLEEPDETAILS_ID.CURRVAL);
 INSERT INTO sleep_metrics (sleep_cycle, deep_sleep, awake, rem, light, sleep_details_sleep_id)
 VALUES (10, 11, 13,87, 9, SEQ_SLEEPDETAILS_ID.CURRVAL);
+INSERT INTO sleep_metrics (sleep_cycle, deep_sleep, awake, rem, light, sleep_details_sleep_id)
+VALUES (11, 11, 13,87, 9, SEQ_SLEEPDETAILS_ID.CURRVAL);
+
 
 -- adding health metrics when user is sleeping
 INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exercise_details_exercise_id, sleep_details_sleep_id)
@@ -761,6 +764,10 @@ INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_
 VALUES(TO_DATE('2023-11-04 07:00:00', 'YYYY-MM-DD HH24:MI:SS'), 99, 60, 'Normal', 125, 94, SEQ_USER_ID.CURRVAL, null, SEQ_SLEEPDETAILS_ID.CURRVAL);
 INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exercise_details_exercise_id, sleep_details_sleep_id)
 VALUES(TO_DATE('2023-11-02 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 99, 65, 'Normal', 120, 94, SEQ_USER_ID.CURRVAL, null, SEQ_SLEEPDETAILS_ID.CURRVAL);
+
+-- INSERT INTO health_details (time_of_activity, blood_oxygen, heart_rate, ecg, bp_systolic, bp_diastolic, user_details_user_id, exercise_details_exercise_id, sleep_details_sleep_id)
+-- VALUES(TO_DATE('2023-11-02 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), 99, 65, 'Normal', 120, 94, SEQ_USER_ID.CURRVAL, SEQ_EXERCISEDETAILS_ID.CURRVAL, SEQ_SLEEPDETAILS_ID.CURRVAL);
+
 
 
 CREATE INDEX health_details_index ON health_details(user_details_user_id);
