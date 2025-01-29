@@ -34,7 +34,7 @@ EXCEPTION
 END;
 /
 
-ACCEPT user_id_prompt NUMBER PROMPT 'Enter User ID: ';
+--ACCEPT user_id_prompt NUMBER PROMPT 'Enter User ID: ';
 
 CREATE OR REPLACE PROCEDURE CALL_EXERCISE(user_id_prompt NUMBER)
 AS
